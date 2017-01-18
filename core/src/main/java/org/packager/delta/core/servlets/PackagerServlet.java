@@ -56,7 +56,8 @@ public class PackagerServlet extends SlingSafeMethodsServlet
 	private static final String FROM_PARAM = "from";
 	private static final String CONTENT_PARAM = "content";
 	private static final String DAM_PARAM = "dam";
-	private static final String DAM_EXCLUDE_RENDITIONS = "/content/dam/%s/(?:[^/]+/)*cq5dam\\.(?:[^.]+\\.)*(?:png|jpeg|gif)";
+	private static final String DAM_PATH = "/content/dam/%s";
+	private static final String DAM_EXCLUDE_RENDITIONS = "%s/(?:[^/]+/)*cq5dam\\.(?:[^.]+\\.)*(?:png|jpeg|gif)";
 	
 	/**
 	 * Builds a package according to the specified date and optionally content and dam parameters.
@@ -69,7 +70,7 @@ public class PackagerServlet extends SlingSafeMethodsServlet
 	    
 	    final String lastModified = request.getParameter(FROM_PARAM);
 	    final String contentPath = request.getParameter(CONTENT_PARAM);
-	    final String damPath = request.getParameter(DAM_PARAM);
+	    final String damPath = String.format(DAM_PATH, request.getParameter(DAM_PARAM));
 	    final String excludeRenditions = String.format(DAM_EXCLUDE_RENDITIONS, damPath);
 	    
 	    // First, get resources modified after date
@@ -77,7 +78,7 @@ public class PackagerServlet extends SlingSafeMethodsServlet
 	    Map<String, String> contentPredicates = new HashMap<>();
 
         contentPredicates.put("path", contentPath);
-        contentPredicates.put("type", "Page");
+        contentPredicates.put("type", "cq:Page");
         contentPredicates.put("daterange.property", "@cq:lastModified");
         contentPredicates.put("daterange.lowerBound", lastModified);
         contentPredicates.put("daterange.lowerOperation", ">=");	    
