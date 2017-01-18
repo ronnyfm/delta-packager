@@ -35,22 +35,26 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <!--
-                        <Embed-Dependency>
-                            artifactId1,
-                            artifactId2;inline=true
-                        </Embed-Dependency>
-                        -->
-                        <Sling-Model-Packages>
-                            org.packager.delta.core
-                        </Sling-Model-Packages>
-                    </instructions>
-                </configuration>
-            </plugin>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Import-Package>
+							*
+						</Import-Package>
+						<Export-Package>org.packager.aem.utilities.*</Export-Package>
+						<Sling-Test-Regexp>.packager.*Test</Sling-Test-Regexp>
+						<_exportcontents>
+						</_exportcontents>						
+						<Implementation-Title>${project.name}</Implementation-Title>
+						<Implementation-Version>${project.version}</Implementation-Version>
+
+						<Embed-Dependency>*;scope=compile|runtime;optional=false</Embed-Dependency>
+						<Embed-Directory>OSGI-INF/lib</Embed-Directory>
+						<Embed-Transitive>true</Embed-Transitive>
+					</instructions>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
     <profiles>
