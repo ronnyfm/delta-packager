@@ -79,7 +79,7 @@ public class PackagerServlet extends SlingSafeMethodsServlet
 
         contentPredicates.put("path", contentPath);
         contentPredicates.put("type", "cq:Page");
-        contentPredicates.put("daterange.property", "@cq:lastModified");
+        contentPredicates.put("daterange.property", "jcr:content/cq:lastModified");
         contentPredicates.put("daterange.lowerBound", lastModified);
         contentPredicates.put("daterange.lowerOperation", ">=");	    
 
